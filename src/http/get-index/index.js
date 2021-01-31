@@ -44,7 +44,8 @@ function parseWeather (nowcast) {
 
 
 exports.handler = async function http (req) {
-  let weather = (await data.get({ table, key }))?.weather;
+  let weather = await data.get({ table, key });
+  if (weather) weather = weather.weather;
 
   if (weather == null || isOutOfDate(weather)) {
     const response = await fetch(url)
